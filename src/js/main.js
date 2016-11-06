@@ -1,4 +1,9 @@
 import _ from "lodash"
+import $ from "jquery"
+
+var timeWait = 500;
+
+$(".get-info").click(function(){console.log("Barry's HP: " + Barry.hp, "Grace's HP: " + Grace.hp, "Jack's HP: " + Jack.hp)});
 
 class Game{
 	constructor(object){
@@ -6,37 +11,83 @@ class Game{
 	}
 
 	turn(team1, team2){
-
-		console.log(team1);
-		console.log(team2);
-
 		team1.combatants=team1.combatants || [];
 		team2.combatants=team2.combatants || [];
 		var totalCombatants = team1.combatants.concat(team2.combatants);
 		var sortedTotal = _.orderBy(totalCombatants, "speed", "desc");
+		game.move(0, sortedTotal);
+	}
 
-		// console.log(sortedTotal);
+	move(combatantIndex, sortedTotal){
+		console.log("move");
+		$(".next").off();
+		if (sortedTotal[combatantIndex]===undefined){
+			console.log("done");
+			game.endTurn(sortedTotal);
+		} else {
+			var combatant = sortedTotal[combatantIndex];
+			console.log(combatant);
+			if (combatant.alive && combatant.nextTarget.alive){
+				combatant.nextMove(combatant.nextTarget, combatant.nextPower);
+				game.updateText();				
+				window.setTimeout(function(){
+					$(".next").on("click", function(){game.checkDead(0, sortedTotal, combatantIndex)});
 
-		for (var i=0; i<sortedTotal.length; i++){
-			var currentCombatant =  sortedTotal[i];
-			if (currentCombatant.alive && currentCombatant.nextTarget.alive){
-				currentCombatant.nextMove(currentCombatant.nextTarget);
-				console.log(currentCombatant.nextTarget.name + " has " + currentCombatant.nextTarget.hp + "hp left");
-				game.checkDead(sortedTotal);
-			}
+				}, timeWait);
+			} else {
+				game.move(combatantIndex+1, sortedTotal);
+			}	
 		}
 	}
 
-	checkDead(combatants){
-		combatants.forEach(function(element){
-			if (element.hp<=0){
-				element.alive=false;
-				element.hp=0;
-				console.log(element.name + " is dead");
-			}
-		})
+	gameOver(){
+		game.text = "Game Over";
+		game.updateText();
 	}
+
+	endTurn(sortedTotal){
+		var allDead = true;
+		sortedTotal.forEach(function(element){
+			if (element.alive === true){
+				allDead = false;
+			}
+		});
+		if (allDead === true){
+			game.gameOver();
+		} else {
+			let testTeam = new CombatTeam(sortedTotal);
+			game.turn(testTeam, []);
+		}
+
+	};
+
+	updateText(){
+		$(".game-text").html(`<p>${game.text}</p>`);
+	}
+
+	checkDead(deadIndex, sortedTotal, combatantIndex){
+		$(".next").off();
+		if (sortedTotal[deadIndex]===undefined){
+			game.move(combatantIndex+1, sortedTotal);
+		} else {
+			var combatant = sortedTotal[deadIndex];
+			if (combatant.hp<=0 && combatant.alive===true){
+				combatant.alive=false;
+				combatant.hp=0;
+				game.text = combatant.name + " has died";
+				game.updateText();
+				$(".next").on("click", nextCheckDead);
+			} else {
+				nextCheckDead();
+			}
+		}
+		function nextCheckDead(){
+			game.checkDead(deadIndex+1, sortedTotal, combatantIndex);
+		}
+	}
+
 }
+
 
 class CombatTeam{
 	constructor(array){
@@ -58,13 +109,14 @@ class Combatant{
 		this.nextMove = undefined;
 		this.nextTarget = undefined;
 		this.speed = object.speed;
+		this.nextPower = object.nextPower;
 	}
 }
 
 var moveset = {
-	heal: function (target){target.hp = target.hp + 30;  console.log(this.name + " healed "+target.name+ " for 30")},
-	frostbolt: function (target){target.hp = target.hp - 30;  console.log(this.name + " frostbolted "+target.name+ " for 30")},
-	slash: function(target){target.hp = target.hp -20;  console.log(this.name + " slashed "+target.name+ " for 20")},
+	heal: function (target, hp){target.hp = target.hp - hp;  game.text = this.name + " healed "+target.name+ " for " + hp},
+	frostbolt: function (target, hp){target.hp = target.hp - hp;  game.text = this.name + " frostbolted "+target.name+ " for " + hp},
+	slash: function(target, hp){target.hp = target.hp - hp;  game.text = this.name + " slashed "+target.name+ " for " + hp},
 	pass: function(){console.log(this.name + " passed")}
 }
 
@@ -78,22 +130,25 @@ var graceMoveset = {slash: moveset.slash, pass: moveset.pass};
 var playerParameters = {
 	jack: {
 		name: "Jack",
-		hpMax: 200,
+		hpMax: 70,
 		speed: 100,
-		moves: jackMoveset
+		moves: jackMoveset,
+		nextPower: 30
 	},
 
 	barry: {
 		name: "Barry",
-		hpMax: 250,
+		hpMax: 100,
 		speed: 80,
-		moves: barryMoveset
+		moves: barryMoveset,
+		nextPower: 30
 	},
 	grace: {
 		name: "Grace",
-		hpMax: 150,
+		hpMax: 50,
 		speed: 120,
-		moves: graceMoveset
+		moves: graceMoveset,
+		nextPower: 10
 	}
 }
 
@@ -113,20 +168,20 @@ let testTeam = new CombatTeam([Jack, Barry, Grace]);
 
 
 Grace.nextMove = Grace.moves.slash;
-Grace.nextTarget = Barry;
+Grace.nextTarget = Grace;
 
 Jack.nextMove = Jack.moves.frostbolt;
-Jack.nextTarget = Barry;
+Jack.nextTarget = Jack;
 
 Barry.nextMove = Barry.moves.heal;
-Barry.nextTarget = Jack;
+Barry.nextTarget = Barry;
 
 game.turn(testTeam, []);
-game.turn(testTeam, []);
-game.turn(testTeam, []);
-game.turn(testTeam, []);
-game.turn(testTeam, []);
-game.turn(testTeam, []);
+// game.turn(testTeam, []);
+// game.turn(testTeam, []);
+// game.turn(testTeam, []);
+// game.turn(testTeam, []);
+// game.turn(testTeam, []);
 
 
 
