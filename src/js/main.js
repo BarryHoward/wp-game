@@ -13,20 +13,62 @@ class Game{
 	turn(team1, team2){
 		team1.combatants=team1.combatants || [];
 		team2.combatants=team2.combatants || [];
-		var totalCombatants = team1.combatants.concat(team2.combatants);
-		var sortedTotal = _.orderBy(totalCombatants, "speed", "desc");
-		game.move(0, sortedTotal);
+
+		game.chooseMove(0, team1, team2)
+	}
+
+	chooseMove(combatantIndex, team1, team2){
+		var combatant = team1.combatants[combatantIndex];
+		if (team1.combatants[combatantIndex]===undefined){
+			var totalCombatants = team1.combatants.concat(team2.combatants);
+			var sortedTotal = _.orderBy(totalCombatants, "speed", "desc");
+			game.move(0, sortedTotal);
+		} else if (combatant.alive === false){
+			game.chooseMove(combatantIndex+1, team1, team2);
+		} else {
+			$(".move-button").off();
+			var moveList = Object.keys(combatant.moves);
+			$(".game-text").html(`<p>${combatant.name}'s Turn</p>`);
+			for (var j=0; j<moveList.length; j++){
+				var buttonHTML = `<button class="move-button" data-move="${moveList[j]}">${moveList[j]}</button>`;
+				$(".game-text").append(buttonHTML);
+			}
+			$(".move-button").on("click", 
+				function(event){
+					var moveName = event.target.dataset.move;
+					combatant.nextMove = combatant.moves[moveName];
+					game.chooseTarget(combatantIndex, team1, team2);
+				})		
+		}
+	}
+
+	chooseTarget(combatantIndex, team1, team2){
+		$(".target-button").off();
+		var combatant = team1.combatants[combatantIndex];
+		$(".game-text").html("");
+		for (var j=0; j<team1.combatants.length; j++){
+			var buttonHTML = `<button class="target-button" data-targetindex="${[j]}">${team1.combatants[j].name}</button>`;
+			$(".game-text").append(buttonHTML);
+		}
+		$(".target-button").on("click", 
+			function(event){
+				var targetNumber = event.target.dataset.targetindex;
+				combatant.nextTarget = team1.combatants[targetNumber];
+				console.log(combatant.nextMove, combatant.nextTarget);
+				console.log(targetNumber);
+				game.chooseMove(combatantIndex + 1, team1, team2);
+			})
+
+
+
 	}
 
 	move(combatantIndex, sortedTotal){
-		console.log("move");
 		$(".next").off();
 		if (sortedTotal[combatantIndex]===undefined){
-			console.log("done");
 			game.endTurn(sortedTotal);
 		} else {
 			var combatant = sortedTotal[combatantIndex];
-			console.log(combatant);
 			if (combatant.alive && combatant.nextTarget.alive){
 				combatant.nextMove(combatant.nextTarget, combatant.nextPower);
 				game.updateText();				
@@ -114,7 +156,7 @@ class Combatant{
 }
 
 var moveset = {
-	heal: function (target, hp){target.hp = target.hp - hp;  game.text = this.name + " healed "+target.name+ " for " + hp},
+	heal: function (target, hp){target.hp = target.hp + hp;  game.text = this.name + " healed "+target.name+ " for " + hp},
 	frostbolt: function (target, hp){target.hp = target.hp - hp;  game.text = this.name + " frostbolted "+target.name+ " for " + hp},
 	slash: function(target, hp){target.hp = target.hp - hp;  game.text = this.name + " slashed "+target.name+ " for " + hp},
 	pass: function(){console.log(this.name + " passed")}
@@ -167,32 +209,13 @@ let Grace = new Combatant(playerParameters.grace);
 let testTeam = new CombatTeam([Jack, Barry, Grace]);
 
 
-Grace.nextMove = Grace.moves.slash;
-Grace.nextTarget = Grace;
+// Grace.nextMove = Grace.moves.slash;
+// Grace.nextTarget = Grace;
 
-Jack.nextMove = Jack.moves.frostbolt;
-Jack.nextTarget = Jack;
+// Jack.nextMove = Jack.moves.frostbolt;
+// Jack.nextTarget = Jack;
 
-Barry.nextMove = Barry.moves.heal;
-Barry.nextTarget = Barry;
+// Barry.nextMove = Barry.moves.heal;
+// Barry.nextTarget = Barry;
 
 game.turn(testTeam, []);
-// game.turn(testTeam, []);
-// game.turn(testTeam, []);
-// game.turn(testTeam, []);
-// game.turn(testTeam, []);
-// game.turn(testTeam, []);
-
-
-
-
-
-// console.log("Barry's HP: " + Barry.hp);
-
-// Jack.moves.frostbolt(Barry);
-// console.log("Jack casts frostbolt on barry for 30 hp")
-// console.log("Barry's HP: " + Barry.hp);
-
-// Barry.moves.heal(Barry);
-// console.log("Barry heals Barry for 30 hp")
-// console.log("Barry's HP: " + Barry.hp);
