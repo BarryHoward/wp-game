@@ -1,10 +1,22 @@
+
+
 .good-team-container{
 	display: flex;
 	flex-direction: column;
 	img{
-		width: 50px;
-		height: 50px;
-		margin: 50px;
+		width: 100px;
+		height: 100px;
+		margin: 20px;
+	}
+}
+
+.good-team-container{
+	display: flex;
+	flex-direction: column;
+	img{
+		width: 100px;
+		height: 100px;
+		margin: 20px;
 	}
 }
 
@@ -14,4 +26,16 @@
 
 .container{
 	display: inline-block;
+}
+
+.battle-container{
+	display: flex;
+	justify-content: space-between;
+}
+
+.info-container{
+	// width: 500px;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: row;
 }

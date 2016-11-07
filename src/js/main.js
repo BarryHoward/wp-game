@@ -212,7 +212,7 @@ class Game{
 	// }
 
 	gameOver(string){
-		game.text = "Game Over " + string;
+		game.text = "Game Over! " + string;
 		game.updateText();
 	}
 
@@ -239,6 +239,8 @@ class Game{
 	checkDead(deadIndex, goodTeam, badTeam){
 		var allDeadGood = true;
 		var allDeadBad = true;
+		var totalCombatants = goodTeam.combatants.concat(badTeam.combatants);
+		console.log(totalCombatants);
 		goodTeam.combatants.forEach(function(element){
 			if (element.alive === true){
 				allDeadGood = false;
@@ -255,7 +257,7 @@ class Game{
 			game.gameOver("You win!")
 		} else {
 			$(".next").off();
-			var combatant = goodTeam.combatants[deadIndex]; // add badguy
+			var combatant = totalCombatants[deadIndex];
 			if (combatant ===undefined){
 				game.sortCombatants(goodTeam, badTeam);
 			} else {
