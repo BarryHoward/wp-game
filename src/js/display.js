@@ -1,5 +1,5 @@
 import $ from "jquery";
-import MOVE_NUM from "./controller.js"
+import {MOVE_NUM} from "./controller.js"
 
 class Display{
 	constructor(object){}
@@ -22,12 +22,14 @@ class Display{
 	}
 
 	updateMoveList(moveList){
+		$(".buttons").html("");
 		for (var j=0; j<moveList.length; j++){
 			var buttonHTML = `<button class="move-button" data-move="${moveList[j]}">${moveList[j]}</button>`;
 			$(".buttons").append(buttonHTML);
 		}
 	}
 	updateTargetList(goodTeam, badTeam){
+		$(".buttons").html("");
 		for (var j=0; j<goodTeam.combatants.length; j++){
 			var buttonHTML = `<button class="target-button" data-team="good" data-targetindex="${[j]}">${goodTeam.combatants[j].name}</button>`;
 			$(".buttons").append(buttonHTML);
@@ -63,7 +65,7 @@ class Display{
 
 	updateMoveOrder(sortedMoveArray){
 		$(".move-order").html(`<ul>`);
-		for (var i=0; i<moveNum; i++){
+		for (var i=0; i<MOVE_NUM; i++){
 			var listHTML = `<li>${sortedMoveArray[i].combatant.name}: ${Math.floor(sortedMoveArray[i].time)}</li>`;
 			$(".move-order").append(listHTML);
 		}

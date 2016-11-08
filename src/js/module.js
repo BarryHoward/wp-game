@@ -1,4 +1,4 @@
-import MOVE_NUM from "./controller.js"
+import {MOVE_NUM} from "./controller.js"
 import _ from "lodash";
 
 class Module{

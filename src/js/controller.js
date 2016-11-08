@@ -24,13 +24,10 @@ class Game{
 
 	chooseMove(combatant, goodTeam, badTeam){
 		$(".move-button").off();
-		$(".buttons").html("");
 		game.text=`${combatant.name}'s Turn`;
 		display.updateText(game.text);
-
 		var moveList = Object.keys(combatant.moves);
 		display.updateMoveList(moveList);
-
 		$(".move-button").on("click", function(event){
 			var moveName = event.target.dataset.move;
 			combatant.nextMove = combatant.moves[moveName];
@@ -40,10 +37,7 @@ class Game{
 
 	chooseTarget(combatant, goodTeam, badTeam){
 		$(".target-button").off();
-		$(".buttons").html("");
 		display.updateTargetList(goodTeam, badTeam);	
-
-		//add for loop targets for badTeam in seperate container
 		$(".target-button").on("click", 		
 			function(event){
 				$(".target-button").off();
@@ -61,20 +55,18 @@ class Game{
 	executeMove(combatant, goodTeam, badTeam){
 		if (combatant.alive){ //&& combatant.nextTarget.alive){
 			game.text = combatant.nextMove(combatant.nextTarget, combatant.power);
-			console.log(game.text);
 			display.updateText(game.text);
 			display.updateScreen(goodTeam, badTeam);
 			setTimeout(function(){
 				$("body").on("click", 
 					function(event){
 						$("body").off();
-						console.log("hi");
 						game.checkDead(0, goodTeam, badTeam)
 					}
 				)
 			}, TIME_WAIT);
 		} else {
-			game.sortCombatants(goodTeam, badTeam);
+			game.createMoveOrder(goodTeam, badTeam);
 		}	
 	}
 
