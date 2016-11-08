@@ -40,6 +40,16 @@ var moveset = {
 	}
 }
 
+var aiBehavior = {
+	superKing: function (combatant, goodTeam, badTeam){
+		var targetIndex = Math.floor(Math.random()*3);
+		combatant.nextTarget = goodTeam.combatants[targetIndex];
+		var moveIndex = Math.floor(Math.random()*Object.keys(combatant.moves).length);
+		// combatant.nextMove = combatant.moves[Object.keys(combatant.moves)[moveIndex]];
+		combatant.nextMove = combatant.moves.kamehameha;
+	}
+}
+
 
 var BarryMoveset = {heal: moveset.heal, pass: moveset.pass, haste: moveset.haste, slow: moveset.slow, revive: moveset.revive};
 var JackMoveset = {frostbolt: moveset.frostbolt, pass: moveset.pass, haste: moveset.haste, slow: moveset.slow};
@@ -77,22 +87,23 @@ var playerParameters = {
 		power: 10,
 		good: true
 	},
-	BossMan: {
+	SuperKing: {
 		name: "Super King",
 		hpMax: 200,
 		movementPeriod: 70,
 		moves: BossManMoveset,
 		appearanceURL: "http://vignette1.wikia.nocookie.net/finalfantasy/images/e/e4/Sephiroth-FFVIIArt.png/revision/latest?cb=20141008012137",
 		power: 50,
-		good: false
+		good: false, 
+		aiBehavior: aiBehavior.superKing
 	}
 }
 
 let Jack = new Combatant(playerParameters.Jack);
 let Barry = new Combatant(playerParameters.Barry);
 let Grace = new Combatant(playerParameters.Grace);
-let BossMan = new Combatant(playerParameters.BossMan);
+let SuperKing = new Combatant(playerParameters.SuperKing);
 
-var allCombatants = {Jack: Jack, Barry: Barry, Grace: Grace, BossMan: BossMan};
+var allCombatants = {Jack: Jack, Barry: Barry, Grace: Grace, SuperKing: SuperKing};
 
 export {allCombatants};

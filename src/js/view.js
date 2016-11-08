@@ -1,7 +1,8 @@
 import $ from "jquery";
-import {MOVE_NUM} from "./controller.js"
+import {MOVE_NUM, TIME_WAIT} from "./main.js"
 
-class Display{
+
+class View{
 	constructor(object){}
 
 	drawScreen(object){
@@ -73,6 +74,6 @@ class Display{
 	}
 }
 
-let display = new Display();
+let view = new View();
 
-export {display};
+export {view};
