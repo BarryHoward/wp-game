@@ -2,9 +2,13 @@ import {Combatant} from "./Combatant.js"
 
 var moveset = {
 	heal: function (target, hp){
-		target.hp = target.hp + hp;
-		if (target.hp>target.hpMax){target.hp = target.hpMax};
-		return this.name + " healed "+target.name+ " for " + hp;
+		if (target.alive) {
+			target.hp = target.hp + hp;
+			if (target.hp>target.hpMax){target.hp = target.hpMax};
+			return this.name + " healed "+target.name+ " for " + hp;
+		} else {
+			return target.name + " is dead.";
+		}
 	},
 	frostbolt: function (target, hp){
 		target.hp = target.hp - hp;
@@ -83,7 +87,7 @@ var playerParameters = {
 		hpMax: 50,
 		movementPeriod: 120,
 		moves: GraceMoveset,
-		appearanceURL: "http://vignette2.wikia.nocookie.net/avatar/images/4/46/Toph_Beifong.png/revision/latest?cb=20131230122047",
+		appearanceURL: "./images/Chere-Right.png",
 		power: 10,
 		good: true
 	},
