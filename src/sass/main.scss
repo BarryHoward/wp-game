@@ -20,17 +20,21 @@
 	}
 }
 
-.controls{
-	display: inline-block;
+.buttons{
+	display: flex;
+	flex-direction: column;
 }
 
 .container{
 	display: inline-block;
+	width: 100%;
 }
 
 .battle-container{
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
+	background-image: url("../../images/grass-background.png")
 }
 
 .info-container{
