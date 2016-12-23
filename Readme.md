@@ -1,55 +1,7 @@
-# Installation
+# Game Project Bonus Assignment (WORK IN PROGRESS)
 
-#### Prerequisites
+[deployed to surge](http://tiy-barryhoward-wp-game.surge.sh/)
 
-Make sure you have an up to date installation of `npm`
-with `brew update` followed by either `brew install npm` or `brew upgrade npm`.
+After completing the gilded rose weekened assignment, I began creating a game for bonus work.  I continued working on this as long as I had free time, but eventually I had to refocus when hackathon and final project work began, leaving the game unfinished.
 
-Then use npm to install the following apps with `npm install -g $APP_NAME`
-* `gulp-cli`
-* `surge`
-
-Finally, I would strongly encourage you to install the `newapp` script from [here][newapp].
-
-[newapp]: https://gist.github.com/kingcons/a25733c233faf10847cbb4ff557e6843
-
-# Usage
-
-#### If you are using the `newapp` tool
-
-*NOTE:* If you do not use a lowercased project/folder name, the automatic deploy to surge with `npm run deploy` will fail as surge.sh always expects lowercased names.
-
-1. Run `$ newapp template <project name>`
-2. Change in to your new project
-3. Initialize Git `$ git init`
-4. Build
-
-#### If you are NOT using the `newapp` tool
-
-1. Clone down this repo
-2. Rename and change into the project folder
-3. Remove `git` from it `$ rm -rf .git`
-4. Initialize Git `$ git init`
-5. Install the dependencies `$ npm install`
-6. Build 
-
-
-# Features
-
-This template features a couple different tools. First it utalizes both NPM and Gulp for different tasks.
-
-## Gulp Tasks
-
-All tasks are listed below, but ideally you will just need to run `gulp start` and be done with it.
-
-- `gulp start`: This is the primary task that will fire up the server and allow you to start building
-- `gulp server`: This will start a Browsersync server with live-reload
-- `gulp sass`: This will compile your SASS
-- `gulp browserify`: This will transpile your JS from ES6 to ES5
-- `gulp watch`: This will start a watcher for files
-
-## NPM Scripts
-
-- `npm run test`: This will launch Mocha in your terminal and run any tests
-- `npm run deploy`: This will deploy your application to Surge.sh for you
-- `npm run lint`: This will run ESLint on your `/src/js` folder
+The game is a standard turn-based RPG constructured using JQuery and a basic MVC framework.  Currently the styling isn't completed as is a lot of functionality, but it is still somewhat playable.  The Move order is to the right, with each players turn being listed out based on their speed, etc.  Any actions performed by players are listed at the top, while the controls are listed at the bottom.  After each action, the player must click to progress to the next screen.
