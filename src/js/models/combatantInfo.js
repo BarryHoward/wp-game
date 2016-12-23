@@ -78,7 +78,7 @@ var playerParameters = {
 		power: 30,
 		good: true,
 		appearances: JackAppearances,
-		appearanceURL: "./images/Black-mage/Right.png"
+		appearanceURL: "./images/BM-Right.png"
 	},
 
 	Barry: {
@@ -89,7 +89,7 @@ var playerParameters = {
 		power: 30,
 		good: true,
 		appearances: BarryAppearances,
-		appearanceURL: "./images/Black-mage/Right.png"
+		appearanceURL: "./images/BM-Right.png"
 	},
 	Grace: {
 		name: "Grace",
@@ -97,7 +97,7 @@ var playerParameters = {
 		movementPeriod: 120,
 		moves: GraceMoveset,
 		appearances: GraceAppearances,
-		appearanceURL: "./images/Black-mage/Right.png",
+		appearanceURL: "./images/BM-Right.png",
 		power: 10,
 		good: true
 	},
