@@ -15,6 +15,7 @@ class Combatant{
 		this.speed = Math.floor(1/this.movementPeriod * 1000);
 		this.good = object.good;
 		this.aiBehavior = object.aiBehavior;
+		this.appearances = object.appearances;
 	}
 }
 

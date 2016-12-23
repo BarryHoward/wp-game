@@ -31,8 +31,11 @@ var moveset = {
 		if (!target.alive){
 			target.alive = true;
 			target.hp = target.hpMax/2;
-			return target.name + " has been revived!";
 			target.moveTimes = 1;
+			target.appearanceURL = target.appearances.normal;
+			console.log(target);
+			return target.name + " has been revived!";
+
 		} else {
 			return "It had no effect";
 		}
@@ -60,6 +63,10 @@ var JackMoveset = {frostbolt: moveset.frostbolt, pass: moveset.pass, haste: move
 var GraceMoveset = {slash: moveset.slash, pass: moveset.pass, haste: moveset.haste, slow: moveset.slow};
 var BossManMoveset = {kamehameha: moveset.kamehameha, heal: moveset.heal, haste: moveset.haste, slash: moveset.slash}
 
+var BarryAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
+var GraceAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
+var JackAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
+
 
 
 var playerParameters = {
@@ -70,7 +77,8 @@ var playerParameters = {
 		moves: JackMoveset,
 		power: 30,
 		good: true,
-		appearanceURL: "http://vignette4.wikia.nocookie.net/timburton/images/2/2a/JackNicholson.jpg/revision/latest?cb=20111026160849"
+		appearances: JackAppearances,
+		appearanceURL: "./images/Black-mage/Right.png"
 	},
 
 	Barry: {
@@ -80,14 +88,16 @@ var playerParameters = {
 		moves: BarryMoveset,
 		power: 30,
 		good: true,
-		appearanceURL: "http://vignette1.wikia.nocookie.net/archer/images/a/a4/BarryCyborg.png/revision/latest?cb=20110422175443",
+		appearances: BarryAppearances,
+		appearanceURL: "./images/Black-mage/Right.png"
 	},
 	Grace: {
 		name: "Grace",
 		hpMax: 50,
 		movementPeriod: 120,
 		moves: GraceMoveset,
-		appearanceURL: "./images/Chere-Right.png",
+		appearances: GraceAppearances,
+		appearanceURL: "./images/Black-mage/Right.png",
 		power: 10,
 		good: true
 	},
@@ -96,7 +106,7 @@ var playerParameters = {
 		hpMax: 200,
 		movementPeriod: 70,
 		moves: BossManMoveset,
-		appearanceURL: "http://vignette1.wikia.nocookie.net/finalfantasy/images/e/e4/Sephiroth-FFVIIArt.png/revision/latest?cb=20141008012137",
+		appearanceURL: "./images/White-Mage-Left.png",
 		power: 50,
 		good: false, 
 		aiBehavior: aiBehavior.superKing

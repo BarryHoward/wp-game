@@ -17,6 +17,7 @@ class Combat{
 	}
 
 	createMoveOrder(goodTeam, badTeam){
+		view.updateScreen(goodTeam, badTeam);
 		var sortedMoveArray = sortCombatants(goodTeam, badTeam);
 		view.updateMoveOrder(sortedMoveArray);
 		combat.chooseMove(sortedMoveArray[0].combatant, goodTeam, badTeam);
@@ -96,7 +97,7 @@ class Combat{
 		if (combatant.alive){ //&& combatant.nextTarget.alive){
 			game.text = combatant.nextMove(combatant.nextTarget, combatant.power);
 			view.updateText(game.text);
-			view.updateScreen(goodTeam, badTeam);
+
 			setTimeout(function(){
 				$("body").on("click", 
 					function(event){
@@ -133,6 +134,7 @@ class Combat{
 			if (dead){
 				game.text = combatant.name + " has died";
 				view.updateText(game.text);
+				combatant.appearanceURL= combatant.appearances.dead;
 				$("body").on("click", function(){combat.checkDead(deadIndex+1, goodTeam, badTeam)});
 			} else {
 				combat.checkDead(deadIndex+1, goodTeam, badTeam);
