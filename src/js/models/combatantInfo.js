@@ -63,9 +63,9 @@ var JackMoveset = {frostbolt: moveset.frostbolt, pass: moveset.pass, haste: move
 var GraceMoveset = {slash: moveset.slash, pass: moveset.pass, haste: moveset.haste, slow: moveset.slow};
 var BossManMoveset = {kamehameha: moveset.kamehameha, heal: moveset.heal, haste: moveset.haste, slash: moveset.slash}
 
-var BarryAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
-var GraceAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
-var JackAppearances = {normal: "./images/Black-mage/Right.png", tired: "./images/Black-mage/Tired-Right.png", dead: "./images/Black-mage/Dead-Right.png"};
+var BarryAppearances = {normal: "./images/BM-Right.png", tired: "./images/BM-Tired-Right.png", dead: "./images/BM-Dead-Right.png"};
+var GraceAppearances = {normal: "./images/BM-Right.png", tired: "./images/BM-Tired-Right.png", dead: "./images/BM-Dead-Right.png"};
+var JackAppearances = {normal: "./images/BM-Right.png", tired: "./images/BM-Tired-Right.png", dead: "./images/BM-Dead-Right.png"};
 
 
 
